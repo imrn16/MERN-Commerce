@@ -52,7 +52,7 @@ const Home = () => {
 						<SliderCarousel />
 					</div>
 					<div className="bg-green-900s relative">
-					<div  className=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-stone-600 h-[50%] w-[50%] flex justify-center items-center blur-[200px] md:blur-[400px] rounded-full opacity-60">
+					<div  className=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-stone-600 h-[50%] w-[50%] flex justify-center items-center blur-[200px] md:blur-[400px] rounded-full opacity-70">
 							<div>test</div>
 						</div>
 						<div className="flex flex-col items-center justify-center w-full bg-reds-900 mt-[10rem]">

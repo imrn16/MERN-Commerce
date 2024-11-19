@@ -99,12 +99,12 @@ const Cart = () => {
 											/>
 										</div>
 
-										<div className="flex-1 ml-2 bg-grays-900 flex flex-col">
+										<div className="flex-1 ml-2 bg-grays-900 flex flex-col bg-red-900s ">
 											<div
 												style={{
 													fontSize: `${componentWidth * 0.04}px`,
 												}}
-												className="text-3xls flex flex-col bg-grays-800 font-semibold truncate">
+												className="text-3xls flex flex-col bg-grays-800 font-semibold truncate w-full bg-red-900s max-w-[35vw]" >
 												{item.name}
 											</div>
 

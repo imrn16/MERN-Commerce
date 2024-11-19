@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,12 @@ import { clearCartItems } from "../../redux/features/cart/cartSlice";
 
 const PlaceOrder = () => {
   const navigate = useNavigate();
+  const [pageLoad, setPageLoad] = useState(false);
+
+  useEffect(() => {
+		setPageLoad(true);
+		window.scrollTo(0, 0);
+	}, []);
 
   const cart = useSelector((state) => state.cart);
 
@@ -43,13 +49,25 @@ const PlaceOrder = () => {
 
   return (
     <>
-      <ProgressSteps step1 step2 step3 />
+      {/* <ProgressSteps step1 step2 step3 /> */}
 
-      <div className="container mx-auto mt-8">
+
+      <div className="container mx-auto mt-8 flex flex-col items-center">
+        <div>
+          <h1
+						style={{
+							fontSize: `min(12vw, 12vh)`, // Takes the smaller value between 20% of the viewport width and height
+						}}
+						className={`font-semibold mb-4 transition-all duration-1000 ${pageLoad ? "opacity-100 blur-none" : "opacity-0 blur-sm"}`}>
+						Review
+					</h1>
+          
+          </div>
+          <div>
         {cart.cartItems.length === 0 ? (
           <Message>Your cart is empty</Message>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto bg-stone-800 backdrop-blur-lg bg-opacity-60 rounded-3xl p-4">
             <table className="w-full border-collapse">
               <thead>
                 <tr>
@@ -86,10 +104,11 @@ const PlaceOrder = () => {
             </table>
           </div>
         )}
+        </div>
 
-        <div className="mt-8">
+        <div className="mt-8 bg-stone-800 bg-opacity-60 rounded-xl backdrop-blur-xl py-6 p-4 md:p-6 ">
           <h2 className="text-2xl font-semibold mb-5">Order Summary</h2>
-          <div className="flex justify-between flex-wrap p-8 bg-[#181818]">
+          <div className="flex justify-between flex-wrap p-8 ">
             <ul className="text-lg">
               <li>
                 <span className="font-semibold mb-4">Items:</span> $
@@ -114,21 +133,26 @@ const PlaceOrder = () => {
             <div>
               <h2 className="text-2xl font-semibold mb-4">Shipping</h2>
               <p>
-                <strong>Address:</strong> {cart.shippingAddress.address},{" "}
+                <strong>Address:</strong> 
+                
+                <div>
+                {cart.shippingAddress.address},{" "}
+                </div>
+                
                 {cart.shippingAddress.city} {cart.shippingAddress.postalCode},{" "}
                 {cart.shippingAddress.country}
               </p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Payment Method</h2>
+              <h2 className="text-2xl font-semibold mb-4 mt-4 md:mt-0">Payment Method</h2>
               <strong>Method:</strong> {cart.paymentMethod}
             </div>
           </div>
 
           <button
             type="button"
-            className="bg-pink-500 text-white py-2 px-4 rounded-full text-lg w-full mt-4"
+            className="bg-stone-600  py-2 px-4 rounded-xl bg-opacity-60 text-lg w-full mt-4"
             disabled={cart.cartItems === 0}
             onClick={placeOrderHandler}
           >

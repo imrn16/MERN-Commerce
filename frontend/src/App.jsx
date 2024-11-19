@@ -9,19 +9,41 @@ import NaviDecoration from "./components/NaviDecoration";
 const App = () => {
 	return (
 		<>
-		<div className="overflow-x-hidden flex flex-col min-h-screen">
-			<Background />
+			<div className="overflow-x-hidden flex flex-col min-h-screen">
+				<Background />
 
-			<NaviDecoration />
+				<NaviDecoration />
 
-			<div className="lg:mx-[6rem] xl:mx-[10rem] md:mx-[1rem] mx-[1rem] flex flex-col text-stone-300 ">
-				<ToastContainer />
-				<Navigation className="" />
-				<main className="pt-32">
-					<Outlet />
-				</main>
-				<Footer />
-			</div>
+				<div className="lg:mx-[6rem] xl:mx-[10rem] md:mx-[1rem] mx-[1rem] flex flex-col text-stone-300 ">
+					<ToastContainer
+						position="bottom-center"
+						autoClose={5000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeButton={false}
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+						toastStyle={{
+							backgroundColor: "#292524",
+							color: "",
+							fontSize: "16px",
+							borderRadius: "12px",
+							padding: "12px 24px",
+							margin: '12px 24px',
+							backdropFilter: 'blur(20px)',
+							WebkitBackdropFilter: 'blur(20px)',
+							opacity: '0.9'
+
+						}}
+					/>
+					<Navigation className="" />
+					<main className="pt-32">
+						<Outlet />
+					</main>
+					<Footer />
+				</div>
 			</div>
 		</>
 	);

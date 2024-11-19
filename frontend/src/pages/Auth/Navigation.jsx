@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AiOutlineHome, AiOutlineShopping, AiOutlineLogin, AiOutlineUserAdd, AiOutlineShoppingCart } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 import { BiShoppingBag } from "react-icons/bi";
@@ -20,13 +20,20 @@ import { HiUser } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { MdOutlineCamera } from "react-icons/md";
 import { IoCloseOutline } from "react-icons/io5";
+import { naviState, setState } from "../../redux/api/naviSlice";
 
 const Navigation = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const { userInfo } = useSelector((state) => state.auth);
 	const { cartItems } = useSelector((state) => state.cart);
+	const isMenuOpen = useSelector((state) => state.navi.value);
 
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
+	const [menuIconOpen, setMenuIconOpen] = useState(false);
+	const [menuHamOpen, setMenuHamOpen] = useState(true);
+	const [menuExOpen, setMenuExOpen] = useState(false);
 	const [shouldRender, setShouldRender] = useState(false);
 	const [shouldRenderMenu, setShouldRenderMenu] = useState(false);
 	const [showSidebar, setShowSidebar] = useState(false);
@@ -39,33 +46,57 @@ const Navigation = () => {
 		if (dropdownOpen) {
 			setDropdownOpen(false);
 			console.log(`1`);
-			setTimeout(() => setShouldRender(false), 1000);
+			setTimeout(() => setShouldRender(false), 500);
 			console.log(`2`);
 		} else {
 			setShouldRender(true);
 			console.log(`3`);
-			setTimeout(() => setDropdownOpen(true), 10);
+			setTimeout(() => setDropdownOpen(true), 20);
 			console.log(`4`);
 		}
 	};
 
 	const toggleMenu = () => {
-		setMenuOpen(!menuOpen);
-		if (menuOpen) {
-			setMenuOpen(false);
+		//setMenuOpen(!menuOpen);
+
+		if (shouldRenderMenu) {
+			//close menu
+			//click x
+
+			//setTimeout(() => setMenuOpen(false), 0);
+			setTimeout(() => dispatch(setState(false)), 0);
+			setTimeout(() => setMenuIconOpen(false), 500);
+
+			console.log(`x start`);
 			console.log(`1`);
 			setTimeout(() => setShouldRenderMenu(false), 1000);
 			console.log(`2`);
 		} else {
-			setShouldRenderMenu(true);
+			//open menu
+			//click ham
+			setTimeout(() => setShouldRenderMenu(true), 0);
 			console.log(`3`);
-			setTimeout(() => setMenuOpen(true), 10);
+			//setTimeout(() => setMenuOpen(true), 500); //edit this to delay fade in
+			setTimeout(() => dispatch(setState(true)), 20);
+			setTimeout(() => setMenuIconOpen(true), 500);
+			console.log(`ham start`);
 			console.log(`4`);
 		}
-	};
 
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+		if (menuHamOpen) {
+			setMenuHamOpen(false);
+			setTimeout(() => setMenuExOpen(true), 510);
+		} else {
+			setMenuExOpen(false);
+			setTimeout(() => setMenuHamOpen(true), 510);
+		}
+
+		// if (menuIconOpen) {
+
+		// } else {
+
+		// }
+	};
 
 	const [logoutApiCall] = useLogoutMutation();
 
@@ -85,7 +116,29 @@ const Navigation = () => {
 		setPageLoad(true);
 	}, []);
 
-	useEffect(() => {}, [dropdownOpen]);
+	useEffect(() => {}, [dropdownOpen, shouldRenderMenu]);
+
+	const dropdownRef = useRef(null);
+
+	// Close dropdown if clicked outside
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+				// setDropdownOpen(false);
+				// console.log(`1`);
+				// setTimeout(() => setShouldRender(false), 500);
+				// console.log(`2`);
+				
+				
+				//toggleDropdown();
+			}
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
 
 	return (
 		<div
@@ -148,7 +201,7 @@ const Navigation = () => {
 
 			<div className="flex flex-row bg-purples-900">
 				<div className=" flex flex-row items-center align-center bg-oranges-900 ">
-					{menuOpen && (
+					{shouldRenderMenu && (
 						<div
 							style={{
 								zIndex: 9998,
@@ -163,7 +216,7 @@ const Navigation = () => {
 							className={`absolute inset w-[100vw] h-20`}>
 							<div
 								className={`flex justify-around sspace-x-8 bg-blues-900 font-light  md:flex transition-all duration-1000 
-										${shouldRenderMenu ? "delay-500 opacity-0 blur-md" : "opacity-100 "}
+										${isMenuOpen ? "delay-500 opacity-100" : "opacity-0 blur-md"}
 										
 										`}>
 								<Link
@@ -236,90 +289,116 @@ const Navigation = () => {
 							</div>
 
 							{shouldRender && (
-								<ul
-									style={{
-										zIndex: 9998,
-										//opacity: 1,
-										background: `2f2f2f`,
-										backdropFilter: `blur(100px)`,
-										webkitBackdropFilter: `blur(100px)`,
-										//marginTop: `540px`,
-										//borderBottom: `1px solid rgba(20, 20, 20, 0.18)`,
-										// boxShadow: `0 8px 32px 0 rgba(31, 38, 135, 0.37`
-									}}
-									className={` opacity-0 absolute right-0 mt-9s6 space-y-2 rounded-xl bg-stones-800 text-stoness-400 transition-all duration-1000 
+								<>
+									{/* <div
+								onClick={() => toggleDropdown()}
+								className=" bg-red-900 opacity-0 absolute -inset-x-1/2 inset-y-0  w-[200vw] h-[100vh] "></div> */}
+									<ul
+										ref={dropdownRef}
+										style={{
+											zIndex: 9998,
+											//opacity: 1,
+											background: `2f2f2f`,
+											backdropFilter: `blur(100px)`,
+											webkitBackdropFilter: `blur(100px)`,
+											//marginTop: `540px`,
+											//borderBottom: `1px solid rgba(20, 20, 20, 0.18)`,
+											// boxShadow: `0 8px 32px 0 rgba(31, 38, 135, 0.37`
+										}}
+										className={` opacity-0 absolute right-0 mt-9s6 space-y-1l rounded-xl bg-stones-800 text-stone-300 transition-all duration-500 flex flex-col  justify-center items-center
 										${dropdownOpen ? "opacity-100" : "opacity-0 blur-sm"}
-										${userInfo.isAdmin ? `mt-[500px]` : `mt-[220px]`}
+										${userInfo.isAdmin ? `mt-[530px]` : `mt-[240px]`}
 										`}>
-									{console.log(userInfo)}
-									<li>
-										<span>{userInfo.username}</span>
-										<br></br>
-										<span>{userInfo.email}</span>
-									</li>
+										{console.log(userInfo)}
 
-									<li>
-										<Link
-											to="/profile"
-											className="block px-4 py-2 hover:bg-gray-600 rounded-xl">
-											PROFILE
-										</Link>
-									</li>
-									{/* <li>
+										<li className="w-full flex flex-col justify-center sitems-center rounded-t-xl bg-stone-700 bg-opacity-30  pb-2 px-4">
+											<div className="flex flex-col justify-center pt-2 font-semibold"> {userInfo.username}</div>
+
+											<div className="text-stone-400 text-sm">{userInfo.email}</div>
+										</li>
+
+										<li className="flex flex-col w-full items-center justify-center text-center">
+											<Link
+												to="/profile"
+												onClick={() => toggleDropdown()}
+												className="block flex flex-col w-full ppx-4 py-3 hover:bg-opacity-30 bg-stone-600 bg-opacity-0 rounded-md">
+												PROFILE
+											</Link>
+										</li>
+										<hr className="border-stone-700 border-opacity-50 w-[50%] "></hr>
+										{/* <li>
 										<Link
 											to="/favorite"
 											className="block px-4 py-2 hover:bg-gray-600 rounded-xl">
 											<span className="nav-item-name">SAVED</span>
 										</Link>
 									</li> */}
-									<li>
-										<button
-											onClick={logoutHandler}
-											className="block w-full px-4 py-2 text-left hover:bg-gray-600 rounded-xl">
-											LOG OUT
-										</button>
-									</li>
-									{userInfo.isAdmin && (
-										<>
-											<li>ADMIN</li>
-											<li>
-												<Link
-													to="/admin/dashboard"
-													className="block px-4 py-2 hover:bg-gray-600 rounded-xl">
-													DASHBOARD
-												</Link>
-											</li>
-											<li>
-												<Link
-													to="/admin/userlist"
-													className="block px-4 py-2 hover:bg-gray-600 rounded-xl">
-													USERS
-												</Link>
-											</li>
-											<li>
-												<Link
-													to="/admin/productlist"
-													className="block px-4 py-2 hover:bg-gray-600 rounded-xl">
-													PRODUCTS
-												</Link>
-											</li>
-											<li>
-												<Link
-													to="/admin/categorylist"
-													className="block px-4 py-2 hover:bg-gray-600 rounded-xl">
-													CATEGORY
-												</Link>
-											</li>
-											<li>
-												<Link
-													to="/admin/orderlist"
-													className="block px-4 py-2 hover:bg-gray-600 rounded-xl">
-													ORDERS
-												</Link>
-											</li>
-										</>
-									)}
-								</ul>
+										<li className="flex flex-col w-full items-center justify-center text-center">
+											<Link
+												onClick={logoutHandler}
+												className={`block flex flex-col w-full ppx-4 py-3 hover:bg-opacity-30 bg-stone-600 bg-opacity-0 
+												
+											${!userInfo.isAdmin ? "rounded-t-md rounded-b-xl" : "rounded-md"}
+
+												`}>
+												LOG OUT
+											</Link>
+										</li>
+										{userInfo.isAdmin && (
+											<>
+												<li className="flex flex-col w-full items-center justify-center text-center">
+													<Link className="block flex flex-col w-full ppx-4 py-3 bg-opacity-10 bg-stone-600 bg-opacity-0 rounded-mds">
+														ADMIN
+													</Link>
+												</li>
+												<li className="flex flex-col w-full items-center justify-center text-center">
+													<Link
+														to="/admin/dashboard"
+														onClick={() => toggleDropdown()}
+														className="block flex flex-col w-full ppx-4 py-3 hover:bg-opacity-30 bg-stone-600 bg-opacity-0 rounded-md">
+														DASHBOARD
+													</Link>
+												</li>
+												<hr className="border-stone-700 border-opacity-50 w-[50%] "></hr>
+												<li className="flex flex-col w-full items-center justify-center text-center">
+													<Link
+														to="/admin/userlist"
+														onClick={() => toggleDropdown()}
+														className="block flex flex-col w-full ppx-4 py-3 hover:bg-opacity-30 bg-stone-600 bg-opacity-0 rounded-md">
+														USERS
+													</Link>
+												</li>
+												<hr className="border-stone-700 border-opacity-50 w-[50%] "></hr>
+												<li className="flex flex-col w-full items-center justify-center text-center">
+													<Link
+														to="/admin/productlist"
+														onClick={() => toggleDropdown()}
+														className="block flex flex-col w-full ppx-4 py-3 hover:bg-opacity-30 bg-stone-600 bg-opacity-0 rounded-md">
+														PRODUCTS
+													</Link>
+												</li>
+												<hr className="border-stone-700 border-opacity-50 w-[50%] "></hr>
+												<li className="flex flex-col w-full items-center justify-center text-center">
+													<Link
+														to="/admin/categorylist"
+														onClick={() => toggleDropdown()}
+														className="block flex flex-col w-full ppx-4 py-3 hover:bg-opacity-30 bg-stone-600 bg-opacity-0 rounded-md">
+														CATEGORY
+													</Link>
+												</li>
+												<hr className="border-stone-700 border-opacity-50 w-[50%] "></hr>
+												<li className="flex flex-col w-full items-center justify-center text-center">
+													<Link
+														to="/admin/orderlist"
+														onClick={() => toggleDropdown()}
+														className="block flex flex-col w-full ppx-4 py-3 hover:bg-opacity-30 bg-stone-600 bg-opacity-0 rounded-b-xl rounded-t-md">
+														ORDERS
+													</Link>
+												</li>
+											</>
+										)}
+									</ul>
+								</>
 							)}
 						</>
 					) : (
@@ -379,17 +458,17 @@ const Navigation = () => {
 								onClick={() => toggleMenu()}
 							/>
 						)} */}
-						{shouldRenderMenu ? (
+						{menuIconOpen ? (
 							<IoCloseOutline
-								className={`bg-red-900s w-[24px] h-[24px] transition-all duration-1000 
-									${menuOpen ? " " : " blur-lg "}`}
+								className={`bg-red-900s w-[24px] h-[24px] transition-all duration-[500ms] opacity-0s
+									${menuExOpen ? "bg-red-900s " : " bg-red-900s blur-sm opacity-10 "}`}
 								size={40}
 								onClick={() => toggleMenu()}
 							/>
 						) : (
 							<RxHamburgerMenu
-								className={`transition-all duration-1000 opacity-100
-								${menuOpen ? "blur-lg " : "blur-lgl"}`}
+								className={`bg-red-900s w-[24px] h-[24px] transition-all duration-[500ms]
+									${!menuHamOpen ? "blur-sm opacity-10 lbg-green-900 " : " "}`}
 								size={24}
 								onClick={() => toggleMenu()}
 							/>
