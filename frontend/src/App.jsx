@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-
-function App() {
-	return (
-		<>
-			<div>Hello World</div>
-		</>
-	);
-}
-=======
 import { Outlet } from "react-router-dom";
 import Navigation from "./pages/Auth/Navigation";
 import { ToastContainer } from "react-toastify";
@@ -44,11 +31,10 @@ const App = () => {
 							fontSize: "16px",
 							borderRadius: "12px",
 							padding: "12px 24px",
-							margin: '12px 24px',
-							backdropFilter: 'blur(20px)',
-							WebkitBackdropFilter: 'blur(20px)',
-							opacity: '0.9'
-
+							margin: "12px 24px",
+							backdropFilter: "blur(20px)",
+							WebkitBackdropFilter: "blur(20px)",
+							opacity: "0.9",
 						}}
 					/>
 					<Navigation className="" />
@@ -61,6 +47,5 @@ const App = () => {
 		</>
 	);
 };
->>>>>>> master
 
 export default App;
