@@ -34,7 +34,7 @@ const App = () => {
 							margin: "12px 24px",
 							backdropFilter: "blur(20px)",
 							WebkitBackdropFilter: "blur(20px)",
-							opacity: "0.9",
+							opacity: "1",
 						}}
 					/>
 					<Navigation className="" />
