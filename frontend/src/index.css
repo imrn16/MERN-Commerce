@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	/* @apply bg-black; */
+	background: rgba(0, 0, 0, 1);
+	@apply overflow-x-hidden;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+/* body {
+  background: #1f1f1f;
+  color: #fff;
+} */
+
+input,
+textarea {
+	color: #000;
+}
+
+.backdrop-blur-lg {
+	--tw-backdrop-blur: blur(20px); /* Adjust the blur value as needed */
+	-webkit-backdrop-filter: var(--tw-backdrop-blur);
+	backdrop-filter: var(--tw-backdrop-blur);
+}
+
+.backdrop-blur-md {
+	--tw-backdrop-blur: blur(20px); /* Adjust the blur value as needed */
+	-webkit-backdrop-filter: var(--tw-backdrop-blur);
+	backdrop-filter: var(--tw-backdrop-blur);
+}
+
+
+
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
