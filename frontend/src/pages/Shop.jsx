@@ -165,7 +165,7 @@ const Shop = () => {
 										checked={products.includes(brand)}
 										onChange={(e) => handleBrandClick(e.target.checked, brand)}
 										//onChange={() => handleBrandClick(brand)}
-										className="hiddens"
+										className="hidden"
 									/>
 
 									{/* Clickable Label */}
