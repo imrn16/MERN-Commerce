@@ -5,8 +5,16 @@ import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer";
 import Background from "./components/Background";
 import NaviDecoration from "./components/NaviDecoration";
+import { useEffect } from "react";
 
 const App = () => {
+	// useEffect(() => {
+	// 	fetch(`${import.meta.env.VITE_API_URL}/api/products`)
+	// 		.then((response) => response.json())
+	// 		.then((data) => setProducts(data))
+	// 		.catch((error) => console.error("Error fetching products:", error));
+	// }, []);
+
 	return (
 		<>
 			<div className="overflow-x-hidden flex flex-col min-h-screen">
