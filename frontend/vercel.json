@@ -1,0 +1,13 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "https://mern-commerce-7rnp.onrender.com/api/$1"
+      },
+      {
+        "source": "/uploads/(.*)",
+        "destination": "https://mern-commerce-7rnp.onrender.com/uploads/$1"
+      }
+    ]
+  }
+  
