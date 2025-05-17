@@ -6,6 +6,7 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
+import { useState } from "react";
 
 function FadeCarousel({ label, category }) {
 	const settings = {
