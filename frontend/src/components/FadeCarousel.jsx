@@ -74,18 +74,19 @@ function FadeCarousel({ label, category }) {
 
 		return (
 			<div className="md:h-[32vh] h-[50vh] md:max-h-[30rem] max-h-[30rem] min-h-[20rem] rounded-xl bg-reds-900 mx-2 md:mx-4 ">
-				{!loaded && (
+				{!loaded ? (
 					<div className="absolute inset-0 flex justify-center items-center bg-black/20 z-10 rounded-3xl">
 						<Loader />
 					</div>
+				) : (
+					<img
+						src={img}
+						alt={title}
+						onLoad={() => setLoaded(true)}
+						onError={() => setLoaded(true)}
+						className={`rounded-3xl h-full w-full object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+					/>
 				)}
-				<img
-					src={img}
-					alt={title}
-					onLoad={() => setLoaded(true)}
-					onError={() => setLoaded(true)}
-					className={`rounded-3xl h-full w-full object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
-				/>
 			</div>
 		);
 	}

@@ -49,18 +49,20 @@ const ProductCard = ({ p }) => {
 				ref={containerRef}
 				className="bg-stone-800 bg-opacity-50 hover:bg-opacity-80 shadow-black drop-shadow-2x border-[0.5px] border-stone-800 p-[min(1vw,1vh)] aspect-[3/4] rounded-2xl ">
 				<div className="h-1/2 bg-blues-900 rounded-2xl bg-reds-900 ">
-					{!loaded && (
+					{!loaded ? (
 						<div>
 							<Loader />
 						</div>
+					) : (
+						<img
+							src={p.image}
+							alt={p.name}
+							onLoad={() => setLoaded(true)}
+							onError={() => setLoaded(true)}
+							className={`w-full h-full max-h-fits object-contain aspect-auto rounded-xl ${loaded ? "opacity-100" : "opacity-0"}`}
+						/>
 					)}
-					<img
-						src={p.image}
-						alt={p.name}
-						onLoad={() => setLoaded(true)}
-						onError={() => setLoaded(true)}
-						className={`w-full h-full max-h-fits object-contain aspect-auto rounded-xl ${loaded ? "opacity-100" : "opacity-0"}`}
-					/>
+
 					{/* <HeartIcon product={p} /> */}
 				</div>
 
