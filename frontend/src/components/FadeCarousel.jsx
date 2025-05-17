@@ -69,40 +69,48 @@ function FadeCarousel({ label, category }) {
 	const cameraList = categoryPhoto({ label });
 
 	function SlideElement({ title, img }) {
+		const [loaded, setLoaded] = useState(false);
+
 		return (
 			<div className="md:h-[32vh] h-[50vh] md:max-h-[30rem] max-h-[30rem] min-h-[20rem] rounded-xl bg-reds-900 mx-2 md:mx-4 ">
+				{!loaded && (
+					<div className="absolute inset-0 flex justify-center items-center bg-black/20 z-10 rounded-3xl">
+						<Loader />
+					</div>
+				)}
 				<img
 					src={img}
 					alt={title}
-					className="rounded-3xl h-full w-full object-cover "
+					onLoad={() => setLoaded(true)}
+					onError={() => setLoaded(true)}
+					className={`rounded-3xl h-full w-full object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
 				/>
 			</div>
 		);
 	}
 
 	return (
-		<Link 
-		to={'/shop'}>
-		<div className="max-w-[70rem] bg-stone-800 py-6 md:px-2 rounded-3xl backdrop-blur-lg bg-opacity-30 mb-10 ml-auto mr-auto">
-			{console.log(`Categories: `, categories)}
-			{console.log(`Products: `, products)}
-			<div className="slider-container md:mb-4 mb-8 bg-blues-900 max-w-[70rem] fade-masks">
-				<Slider
-					ref={(slider) => {
-						sliderRef = slider;
-					}}
-					{...settings}>
-					{cameraList.map((indiv, index) => (
-						<div key={index}>
-							<SlideElement
-								key={index}
-								title={indiv.title}
-								img={indiv.img}
-								className="rounded-xl mx-2"
-							/>
-						</div>
-					))}
-					{/* {products
+		<Link to={"/shop"}>
+			<div className="max-w-[70rem] bg-stone-800 py-6 md:px-2 rounded-3xl backdrop-blur-lg bg-opacity-30 mb-10 ml-auto mr-auto">
+				{console.log(`Categories: `, categories)}
+				{console.log(`Products: `, products)}
+				<div className="slider-container md:mb-4 mb-8 bg-blues-900 max-w-[70rem] fade-masks">
+					<Slider
+						ref={(slider) => {
+							sliderRef = slider;
+						}}
+						{...settings}>
+						{cameraList.map((indiv, index) => (
+							<div key={index}>
+								<SlideElement
+									key={index}
+									title={indiv.title}
+									img={indiv.img}
+									className="rounded-xl mx-2"
+								/>
+							</div>
+						))}
+						{/* {products
 						.filter((c) => c.category === category) // Filter products by category
 						.map((indiv, index) => (
 							<div key={index} className=' flex bg-redl-900'>
@@ -114,12 +122,12 @@ function FadeCarousel({ label, category }) {
 								/>
 							</div>
 						))} */}
-				</Slider>
-				<div className="flex justify-center mt-8">
-					<span className="ml-4 font-semibold text-3xl text-stone-400">{label}</span>
+					</Slider>
+					<div className="flex justify-center mt-8">
+						<span className="ml-4 font-semibold text-3xl text-stone-400">{label}</span>
+					</div>
 				</div>
-			</div>
-			{/* <div
+				{/* <div
 				style={{ textAlign: "center" }}
 				className="bg-reds-900 flex justify-centers justify-end">
 				<button
@@ -133,7 +141,7 @@ function FadeCarousel({ label, category }) {
 					<IoIosArrowForward />
 				</button>
 			</div> */}
-		</div>
+			</div>
 		</Link>
 	);
 }
