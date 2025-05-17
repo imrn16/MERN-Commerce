@@ -82,7 +82,7 @@ function SliderCarousel() {
 							<SlideElement
 								key={index}
 								title={indiv.title}
-								img={isLoading ? <Loader/> : indiv.img}
+								img={indiv.img}
 								className="rounded-xl mx-2"
 							/>
 							<div
