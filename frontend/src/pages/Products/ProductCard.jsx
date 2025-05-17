@@ -38,6 +38,10 @@ const ProductCard = ({ p }) => {
 		return () => window.removeEventListener("resize", calculateWidth);
 	}, []);
 
+	useEffect(() => {
+		console.log("loaded: ", loaded)
+	}, [loaded])
+
 	const [loaded, setLoaded] = useState(false);
 
 	return (
