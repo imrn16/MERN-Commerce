@@ -69,7 +69,8 @@ function SliderCarousel() {
 						alt={title}
 						onLoad={() => setLoaded(true)}
 						onError={() => setLoaded(true)}
-						className={`rounded-3xl h-full w-full object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+						className={`rounded-3xl h-full w-full object-cover transition-opacity duration-500 `}
+						//${loaded ? "opacity-100" : "opacity-0"}
 					/>
 				)}
 			</div>
