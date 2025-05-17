@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "./SliderCarousel.css";
 import { useRef } from "react";
@@ -7,7 +7,6 @@ import { useGetTopProductsQuery } from "../redux/api/productApiSlice";
 import Loader from "./Loader";
 
 function SliderCarousel() {
-
 	const { data, isLoading, error } = useGetTopProductsQuery();
 
 	const settings = {
@@ -56,12 +55,21 @@ function SliderCarousel() {
 	];
 
 	function SlideElement({ title, img }) {
+		const [loaded, setLoaded] = useState(false);
+
 		return (
 			<div className="md:h-[32vh] h-[50vh] md:max-h-[30rem] max-h-[30rem] min-h-[20rem] rounded-xl bg-reds-900 mx-2 md:mx-4 ">
+				{!loaded && (
+					<div>
+						<Loader />
+					</div>
+				)}
 				<img
 					src={img}
 					alt={title}
-					className="rounded-3xl h-full w-full object-cover "
+					onLoad={() => setLoaded(true)}
+					onError={() => setLoaded(true)}
+					className={`rounded-3xl h-full w-full object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
 				/>
 			</div>
 		);
@@ -83,7 +91,7 @@ function SliderCarousel() {
 							<SlideElement
 								key={index}
 								title={indiv.title}
-								img={isLoading ? <Loader/> : indiv.img}
+								img={isLoading ? <Loader /> : indiv.img}
 								className="rounded-xl mx-2"
 							/>
 							<div
