@@ -3,8 +3,12 @@ import Slider from "react-slick";
 import "./SliderCarousel.css";
 import { useRef } from "react";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { useGetTopProductsQuery } from "../redux/api/productApiSlice";
 
 function SliderCarousel() {
+
+	const { data, isLoading, error } = useGetTopProductsQuery();
+
 	const settings = {
 		className: "center",
 		centerMode: true,
@@ -78,7 +82,7 @@ function SliderCarousel() {
 							<SlideElement
 								key={index}
 								title={indiv.title}
-								img={indiv.img}
+								img={isLoading ? <Loader/> : indiv.img}
 								className="rounded-xl mx-2"
 							/>
 							<div
