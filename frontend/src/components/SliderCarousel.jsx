@@ -58,24 +58,25 @@ function SliderCarousel() {
 		const [loaded, setLoaded] = useState(false);
 
 		return (
-			<div className="md:h-[32vh] h-[50vh] md:max-h-[30rem] max-h-[30rem] min-h-[20rem] rounded-xl bg-reds-900 mx-2 md:mx-4 ">
-				{!loaded ? (
-					<div>
+			<div className="relative md:h-[32vh] h-[50vh] md:max-h-[30rem] max-h-[30rem] min-h-[20rem] rounded-xl bg-reds-900 mx-2 md:mx-4">
+				{!loaded && (
+					<div className="absolute inset-0 z-10 flex justify-center items-center bg-black bg-opacity-10">
 						<Loader />
 					</div>
-				) : (
-					<img
-						src={img}
-						alt={title}
-						onLoad={() => {
-							setLoaded(true);
-							console.log("loaded: ", loaded);
-						}}
-						onError={() => setLoaded(true)}
-						className={`rounded-3xl h-full w-full object-cover transition-opacity duration-500 `}
-						//${loaded ? "opacity-100" : "opacity-0"}
-					/>
 				)}
+				<img
+					src={img}
+					alt={title}
+					onLoad={() => {
+						setLoaded(true);
+						console.log("Image loaded");
+					}}
+					onError={() => {
+						setLoaded(true);
+						console.warn("Image failed to load");
+					}}
+					className={`rounded-3xl h-full w-full object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+				/>
 			</div>
 		);
 	}
