@@ -7,7 +7,7 @@ import { useGetTopProductsQuery } from "../redux/api/productApiSlice";
 import Loader from "./Loader";
 
 function SliderCarousel() {
-	const { data, isLoading, error } = useGetTopProductsQuery();
+	//const { data, isLoading, error } = useGetTopProductsQuery();
 
 	const settings = {
 		className: "center",
@@ -97,7 +97,7 @@ function SliderCarousel() {
 							<SlideElement
 								key={index}
 								title={indiv.title}
-								img={isLoading ? <Loader /> : indiv.img}
+								img={indiv.img}
 								className="rounded-xl mx-2"
 							/>
 							<div
