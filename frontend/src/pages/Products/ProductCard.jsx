@@ -38,11 +38,11 @@ const ProductCard = ({ p }) => {
 		return () => window.removeEventListener("resize", calculateWidth);
 	}, []);
 
-	useEffect(() => {
-		console.log("loaded: ", loaded);
-	}, [loaded]);
+	// useEffect(() => {
+	// 	console.log("loaded: ", loaded);
+	// }, [loaded]);
 
-	const [loaded, setLoaded] = useState(false);
+	// const [loaded, setLoaded] = useState(false);
 
 	return (
 		<Link to={`/product/${p._id}`}>
@@ -53,11 +53,11 @@ const ProductCard = ({ p }) => {
 				ref={containerRef}
 				className="bg-stone-800 bg-opacity-50 hover:bg-opacity-80 shadow-black drop-shadow-2x border-[0.5px] border-stone-800 p-[min(1vw,1vh)] aspect-[3/4] rounded-2xl ">
 				<div className="h-1/2 bg-blues-900 rounded-2xl bg-reds-900 ">
-					{!loaded && (
+					{/* {!loaded && (
 						<div>
 							<Loader />
 						</div>
-					)}
+					)} */}
 					<img
 						src={p.image}
 						alt={p.name}
