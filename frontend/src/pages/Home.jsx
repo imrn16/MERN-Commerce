@@ -15,11 +15,13 @@ const Home = () => {
 	return (
 		<>
 			{!keyword ? <Header /> : null}
-			{isLoading ? (
+			{/* {
+			
+			isLoading ? (
 				<Loader />
 			) : isError ? (
 				<Message variant="danger">{isError?.data?.message || isError.error}</Message>
-			) : (
+			) : ( */}
 				<>
 					{/* <div className="relative flex bg-red-900 h-[40rem] w-[40rem]">
 						<div className="flex bg-green-900 h-[20rem] w-[20rem]"></div>
@@ -150,7 +152,7 @@ const Home = () => {
   <div className="aspect-[10/12] bg-yellow-300">Component 16</div>
 </div> */}
 				</>
-			)}
+			{/* )} */}
 		</>
 	);
 };
