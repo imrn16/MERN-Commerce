@@ -63,7 +63,8 @@ const ProductCard = ({ p }) => {
 						alt={p.name}
 						onLoad={() => setLoaded(true)}
 						onError={() => setLoaded(true)}
-						className={`w-full h-full max-h-fits object-contain aspect-auto rounded-xl ${loaded ? "opacity-100" : "opacity-0"}`}
+						className={`w-full h-full max-h-fits object-contain aspect-auto rounded-xl 
+							`}
 						//${loaded ? "opacity-100" : "opacity-0"}
 					/>
 
